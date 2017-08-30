@@ -1,2 +1,4 @@
-# equation-generator
-a simple two operators equation generator written in lua
+# Equation Generator
+
+A simple two operators equation generator written in lua.
+This module output an equation containing 4 numbers as a string.
