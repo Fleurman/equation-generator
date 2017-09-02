@@ -1,6 +1,22 @@
+--[[ 
+# Equation Generator
+module written by Martin Ashton-Lomax
+github-link
+
+= How-To =
+
+
+= TODO =
+-[ ] handle for parameters
+-[ ] clean up
+-[ ] comments
+-[ ] unlimited nb of operators
+
+]]
+
 generator = {}
 generator.nbsize = 2
-generator.limit = 4
+generator.limit = 9
 
 function generator.largeRandom(arg) --size= of number, max= of highest unit, multiple= of the number
   local nb = 0
@@ -84,7 +100,7 @@ function generator.processLargest()
   local pr = 0
   for i=1,3 do
     if nbs[i] > pr then 
-      lrg = i 
+      lrg = i
       pr = nbs[i]
     end
   end
@@ -173,11 +189,13 @@ function generator.calcForLargest(nb1,lrg)
   end
 end
 
+-- Check wether the generated equation is valid
 function verify()
   local nbs2 = {}
   for i,n in ipairs(nbs) do table.insert(nbs2,n) end
   local ops2 = {}
   for i,n in ipairs(ops) do table.insert(ops2,n) end
+  -- replace the '=' operator with a '==' operator to perform a check
   for i,n in ipairs(ops2) do if n == "=" then ops2[i] = "==" end end
   local s = tostring(nbs2[1]) .. tostring(ops2[1]) .. tostring(nbs2[2]) .. tostring(ops2[2]) .. tostring(nbs2[3]) .. tostring(ops2[3]) .. tostring(nbs2[4])
   local func = assert(load("return " .. s))
