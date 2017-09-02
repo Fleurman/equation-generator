@@ -1,7 +1,7 @@
 --[[ 
 # Equation Generator
 module written by Martin Ashton-Lomax
-github-link
+https://github.com/Fleurman/equation-generator
 
 = How-To =
 
