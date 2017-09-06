@@ -3,14 +3,16 @@
 module written by Martin Ashton-Lomax
 https://github.com/Fleurman/equation-generator
 
-= How-To =
+= HOW-TO =
 
 
 = TODO =
--[ ] handle for parameters
+-[ ] handles for parameters
 -[ ] clean up
 -[ ] comments
+-[ ] avoid '.../1' or '...*1'
 -[ ] unlimited nb of operators
+(-[ ] support for square root ?)
 
 ]]
 
@@ -18,7 +20,8 @@ generator = {}
 generator.nbsize = 2
 generator.limit = 9
 
-function generator.largeRandom(arg) --size= of number, max= of highest unit, multiple= of the number
+-- TODO: Add 'min' parameter
+function generator.largeRandom(arg) -- size= of number, max= of highest unit, multiple= of the number
   local nb = 0
   for i=0,arg.size-1 do
     if i == arg.size-1 then
@@ -72,7 +75,7 @@ function generator.newEquation()
       rslt = n1-n2
   elseif op == 3 then
     table.insert(ops,"*")
-    while n1*n2 > 999 do
+    while n1*n2 > 999 or n1 == n2 do                                          -- Size blocked ! ERR with big numbers
       n2 = generator.largeRandom({size=generator.nbsize,max=generator.limit})
     end
     rslt = n1*n2
@@ -95,6 +98,7 @@ function generator.newEquation()
   return eq
 end
 
+-- TODO: Modularize Method to allow more than 4 numbers. (must be able to re-do 'processLargest')
 function generator.processLargest()
   local lrg = 1
   local pr = 0
@@ -119,7 +123,7 @@ function generator.newOp(n,o)
   local l = {"+","-","*","/"}
   local r = math.random(n)+o
   local nop = l[r]
-  while nop == ops[1] or nop == ops[2] do
+  while nop == ops[1] or nop == ops[2] do             -- Why 'ops[2]' ??
     r = math.random(4)
     nop = l[r]
   end
